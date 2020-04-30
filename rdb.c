@@ -1368,7 +1368,8 @@ int rdbSaveBackground(char *filename, rdbSaveInfo *rsi) {
             server.child_info_data.cow_size = private_dirty;
             sendChildInfo(CHILD_INFO_TYPE_RDB);
         }
-        exitFromChild((retval == C_OK) ? 0 : 1);
+		if(server.load_child_pid == -1)
+        	exitFromChild((retval == C_OK) ? 0 : 1);
     } else {
         /* Parent */
         server.stat_fork_time = ustime()-start;
@@ -1392,6 +1393,7 @@ int rdbSaveBackground(char *filename, rdbSaveInfo *rsi) {
         updateDictResizePolicy();
         return C_OK;
     }
+	serverLog(LL_NOTICE, "I'm child");
     return C_OK; /* unreached */
 }
 

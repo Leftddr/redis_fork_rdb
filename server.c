@@ -1137,11 +1137,11 @@ int LoadCron(struct aeEventLoop *eventLoop,long long id, void *clientData){
 			server.rdb_child_pid = -1;
 			rdbSaveInfo rsi_, *rsiptr;
 			rsiptr = rdbPopulateSaveInfo(&rsi_);
-			rdbSaveBackground(server.rdb_filename, rsiptr);
+			int retval = rdbSaveBackground(server.rdb_filename, rsiptr);
 
 			server.imchild = false;
 			zfree(fork_db);
-			exitFromChild(1);
+			exitFromChild((retval == C_OK) ? 0 : 1);
 		}else{
 			server.aof_child_pid = -1;
 			server.rdb_child_pid = -1;
@@ -1307,8 +1307,19 @@ int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
                 backgroundRewriteDoneHandler(exitcode,bysignal);
                 if (!bysignal && exitcode == 0) receiveChildInfo();
             } else if(pid == server.load_child_pid){
+				serverLog(LL_NOTICE, "%d", server.load_child_pid);
+				backgroundSaveDoneHandler(exitcode,bysignal);
+				if(!bysignal && exitcode == 0) receiveChildInfo();
 				server.load_child_pid = -1;
 				serverLog(LL_NOTICE, "Complete terminated load child");
+				/*
+				server.dirty = server.dirty - server.dirty_before_bgsave;
+				server.lastsave = time(NULL);
+				server.lastbgsave_status = C_OK;
+				server.rdb_save_time_last = time(NULL)-server.rdb_save_time_start;
+				server.rdb_save_time_start = -1;
+				*/
+				
 			} 
 			else {
                 if (!ldbRemoveChild(pid)) {
@@ -1330,6 +1341,7 @@ int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
              * the given amount of seconds, and if the latest bgsave was
              * successful or if, in case of an error, at least
              * CONFIG_BGSAVE_RETRY_DELAY seconds already elapsed. */
+			//serverLog(LL_NOTICE, "%d", server.saveparamslen);
             if (server.dirty >= sp->changes &&
                 server.unixtime-server.lastsave > sp->seconds &&
                 (server.unixtime-server.lastbgsave_try >
@@ -1475,7 +1487,7 @@ void beforeSleep(struct aeEventLoop *eventLoop) {
         processUnblockedClients();
 
     /* Write the AOF buffer on disk */
-    flushAppendOnlyFile(0);
+    if(server.loading == 0) flushAppendOnlyFile(0);
 
     /* Handle writes with pending output buffers. */
     handleClientsWithPendingWrites();
