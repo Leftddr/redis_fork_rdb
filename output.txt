@@ -1,0 +1,333 @@
+34771:C 29 Apr 2020 22:28:20.998 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+34771:C 29 Apr 2020 22:28:20.998 # Redis version=5.0.8, bits=64, commit=00000000, modified=0, pid=34771, just started
+34771:C 29 Apr 2020 22:28:20.998 # Configuration loaded
+34771:M 29 Apr 2020 22:28:21.000 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.8 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 34771
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+34771:M 29 Apr 2020 22:28:21.001 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+34771:M 29 Apr 2020 22:28:21.001 # Server initialized
+34771:M 29 Apr 2020 22:28:21.001 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+34771:M 29 Apr 2020 22:28:21.001 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+34771:M 29 Apr 2020 22:28:21.001 * Ready to accept connections
+34771:M 29 Apr 2020 22:28:21.001 * LoadCron
+34771:M 29 Apr 2020 22:28:26.001 * LoadCron
+34771:M 29 Apr 2020 22:28:31.001 * LoadCron
+34771:M 29 Apr 2020 22:28:33.333 * 10 changes in 1 seconds. Saving...
+34771:M 29 Apr 2020 22:28:33.333 * Background saving started by pid 34776
+34776:C 29 Apr 2020 22:28:33.334 * rdbSaveRio
+34776:C 29 Apr 2020 22:28:33.334 * Saving....
+34776:C 29 Apr 2020 22:28:33.334 * key = key:__rand_int__, value = xxx
+34776:C 29 Apr 2020 22:28:33.336 * DB saved on disk
+34776:C 29 Apr 2020 22:28:33.337 * RDB: 0 MB of memory used by copy-on-write
+34771:M 29 Apr 2020 22:28:33.433 * Background saving terminated with success
+34771:M 29 Apr 2020 22:28:36.001 * LoadCron
+34777:C 29 Apr 2020 22:28:36.001 * Hey Im Child
+34777:C 29 Apr 2020 22:28:36.001 * Complete in truncate in rdb
+34777:C 29 Apr 2020 22:28:36.189 * Complete in truncate
+34777:C 29 Apr 2020 22:28:36.189 * Background saving started by pid 34778
+34778:C 29 Apr 2020 22:28:36.190 * rdbSaveRio
+34778:C 29 Apr 2020 22:28:36.190 * Saving....
+
+
+=== REDIS BUG REPORT START: Cut & paste starting from here ===
+34778:C 29 Apr 2020 22:28:36.190 # Redis 5.0.8 crashed by signal: 11
+34778:C 29 Apr 2020 22:28:36.190 # Crashed running the instruction at: 0x7f0beffdecc0
+34778:C 29 Apr 2020 22:28:36.190 # Accessing address: 0x1809
+34778:C 29 Apr 2020 22:28:36.190 # Failed assertion: <no assertion failed> (<no file>:0)
+
+------ STACK TRACE ------
+EIP:
+/lib/x86_64-linux-gnu/libc.so.6(_IO_vfprintf+0x1b50)[0x7f0beffdecc0]
+
+Backtrace:
+redis-rdb-bgsave 127.0.0.1:6379(logStackTrace+0x45)[0x475205]
+redis-rdb-bgsave 127.0.0.1:6379(sigsegvHandler+0xb9)[0x4759c9]
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x11390)[0x7f0bf036b390]
+/lib/x86_64-linux-gnu/libc.so.6(_IO_vfprintf+0x1b50)[0x7f0beffdecc0]
+/lib/x86_64-linux-gnu/libc.so.6(__vsnprintf_chk+0x96)[0x7f0bf00a6896]
+redis-rdb-bgsave 127.0.0.1:6379(serverLog+0xfb)[0x42dbcb]
+redis-rdb-bgsave 127.0.0.1:6379(rdbSaveRio+0x370)[0x451de0]
+redis-rdb-bgsave 127.0.0.1:6379(rdbSave+0xa5)[0x4522e5]
+redis-rdb-bgsave 127.0.0.1:6379(rdbSaveBackground+0x76)[0x452546]
+redis-rdb-bgsave 127.0.0.1:6379(LoadCron+0x254)[0x42de34]
+redis-rdb-bgsave 127.0.0.1:6379(aeProcessEvents+0x3f5)[0x429f55]
+redis-rdb-bgsave 127.0.0.1:6379(aeMain+0x2b)[0x42a0fb]
+redis-rdb-bgsave 127.0.0.1:6379(main+0x4c1)[0x426ca1]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf0)[0x7f0beffb0830]
+redis-rdb-bgsave 127.0.0.1:6379(_start+0x29)[0x426f19]
+
+------ INFO OUTPUT ------
+34778:C 29 Apr 2020 22:28:36.191 * used_memory_human:806.92K
+
+# Server
+redis_version:5.0.8
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:60a57b66a227fa80
+redis_mode:standalone
+os:Linux 4.15.0-96-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:atomic-builtin
+gcc_version:5.4.0
+process_id:34778
+run_id:e7a34063db734dcecfa7d66e7f6406582c63ce56
+tcp_port:6379
+uptime_in_seconds:16
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:11108611
+executable:/home/oslab/redis-rdb/src/./redis-server
+config_file:/home/oslab/redis-rdb/redis.conf
+
+# Clients
+connected_clients:0
+client_recent_max_input_buffer:2
+client_recent_max_output_buffer:0
+blocked_clients:0
+
+# Memory
+used_memory:826288
+used_memory_human:806.92K
+used_memory_rss:6971392
+used_memory_rss_human:6.65M
+used_memory_peak:3938032
+used_memory_peak_human:3.76M
+used_memory_peak_perc:20.98%
+used_memory_overhead:792878
+used_memory_startup:791456
+used_memory_dataset:33410
+used_memory_dataset_perc:95.92%
+allocator_allocated:3975880
+allocator_active:4567040
+allocator_resident:10264576
+total_system_memory:99954270208
+total_system_memory_human:93.09G
+used_memory_lua:37888
+used_memory_lua_human:37.00K
+used_memory_scripts:0
+used_memory_scripts_human:0B
+number_of_cached_scripts:0
+maxmemory:0
+maxmemory_human:0B
+maxmemory_policy:noeviction
+allocator_frag_ratio:1.15
+allocator_frag_bytes:591160
+allocator_rss_ratio:2.25
+allocator_rss_bytes:5697536
+rss_overhead_ratio:0.68
+rss_overhead_bytes:-3293184
+mem_fragmentation_ratio:1.78
+mem_fragmentation_bytes:3063552
+mem_not_counted_for_evict:1350
+mem_replication_backlog:0
+mem_clients_slaves:0
+mem_clients_normal:0
+mem_aof_buffer:1350
+mem_allocator:jemalloc-5.1.0
+active_defrag_running:0
+lazyfree_pending_objects:0
+
+# Persistence
+loading:0
+rdb_changes_since_last_save:204617
+rdb_bgsave_in_progress:0
+rdb_last_save_time:1588166913
+rdb_last_bgsave_status:ok
+rdb_last_bgsave_time_sec:0
+rdb_current_bgsave_time_sec:-1
+rdb_last_cow_size:729088
+aof_enabled:1
+aof_rewrite_in_progress:0
+aof_rewrite_scheduled:0
+aof_last_rewrite_time_sec:-1
+aof_current_rewrite_time_sec:-1
+aof_last_bgrewrite_status:ok
+aof_last_write_status:ok
+aof_last_cow_size:0
+aof_current_size:0
+aof_base_size:0
+aof_pending_rewrite:0
+aof_buffer_length:0
+aof_rewrite_buffer_length:0
+aof_pending_bio_fsync:0
+aof_delayed_fsync:0
+
+# Stats
+total_connections_received:200
+total_commands_processed:394844
+instantaneous_ops_per_sec:66439
+total_net_input_bytes:9916112
+total_net_output_bytes:2755948
+instantaneous_input_kbps:2423.81
+instantaneous_output_kbps:544.82
+rejected_connections:0
+sync_full:0
+sync_partial_ok:0
+sync_partial_err:0
+expired_keys:0
+expired_stale_perc:0.00
+expired_time_cap_reached_count:0
+evicted_keys:0
+keyspace_hits:94844
+keyspace_misses:0
+pubsub_channels:0
+pubsub_patterns:0
+latest_fork_usec:260
+migrate_cached_sockets:0
+slave_expires_tracked_keys:0
+active_defrag_hits:0
+active_defrag_misses:0
+active_defrag_key_hits:0
+active_defrag_key_misses:0
+
+# Replication
+role:master
+connected_slaves:0
+master_replid:cc5d9906d3f6ccd5756e40bb77f901f3adde5d95
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+# CPU
+used_cpu_sys:0.000000
+used_cpu_user:0.001184
+used_cpu_sys_children:0.000000
+used_cpu_user_children:0.000000
+
+# Commandstats
+cmdstat_ping:calls=200000,usec=25647,usec_per_call=0.13
+cmdstat_get:calls=94844,usec=29639,usec_per_call=0.31
+cmdstat_set:calls=100000,usec=97287,usec_per_call=0.97
+
+# Cluster
+cluster_enabled:0
+
+# Keyspace
+db0:keys=1,expires=0,avg_ttl=0
+
+------ CLIENT LIST OUTPUT ------
+
+------ REGISTERS ------
+34778:C 29 Apr 2020 22:28:36.191 # 
+RAX:0000000000000000 RBX:00007ffd4cd5f810
+RCX:ffffffffffffffff RDX:0000000000000020
+RDI:0000000000001809 RSI:00007ffd4cd5f7c8
+RBP:00007ffd4cd5f800 RSP:00007ffd4cd5f290
+R8 :0000000000000000 R9 :0000000000000024
+R10:0000000000000073 R11:0000000000001809
+R12:0000000000559863 R13:00007ffd4cd5f988
+R14:0000000000000000 R15:0000000000559869
+RIP:00007f0beffdecc0 EFL:0000000000010286
+CSGSFS:002b000000000033
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f29f) -> 00007ffd00000000
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f29e) -> 00007ffd4cd5f390
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f29d) -> 00007ffd00000000
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f29c) -> 00007f0b00000000
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f29b) -> 000000000054ed20
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f29a) -> 0000000000000000
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f299) -> 0000002e00000000
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f298) -> ffffffff00000000
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f297) -> 00007ffd4cd5f380
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f296) -> 00007ffd00000000
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f295) -> 0000000500000000
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f294) -> 00007ffd4cd5f368
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f293) -> 00007ffd4cd5f378
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f292) -> 0000000000000000
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f291) -> 00007ffd0000000a
+34778:C 29 Apr 2020 22:28:36.191 # (00007ffd4cd5f290) -> 00007ffd00000000
+
+------ FAST MEMORY TEST ------
+*** Preparing to test memory region 7b0000 (2248704 bytes)
+*** Preparing to test memory region c47000 (135168 bytes)
+*** Preparing to test memory region 7f0beca00000 (2097152 bytes)
+*** Preparing to test memory region 7f0becd7e000 (5767168 bytes)
+*** Preparing to test memory region 7f0bed2ff000 (8388608 bytes)
+*** Preparing to test memory region 7f0bedb00000 (8388608 bytes)
+*** Preparing to test memory region 7f0bee301000 (8388608 bytes)
+*** Preparing to test memory region 7f0bef600000 (8388608 bytes)
+*** Preparing to test memory region 7f0bf0356000 (16384 bytes)
+*** Preparing to test memory region 7f0bf0573000 (16384 bytes)
+*** Preparing to test memory region 7f0bf0e91000 (24576 bytes)
+*** Preparing to test memory region 7f0bf0eb3000 (4096 bytes)
+.O.O.O.O.O.O.O.O.O.O.O.O
+Fast memory test PASSED, however your memory can still be broken. Please run a memory test for several hours if possible.
+
+------ DUMPING CODE AROUND EIP ------
+Symbol: _IO_vfprintf (base: 0x7f0beffdd170)
+Module: /lib/x86_64-linux-gnu/libc.so.6 (base 0x7f0beff90000)
+$ xxd -r -p /tmp/dump.hex /tmp/dump.bin
+$ objdump --adjust-vma=0x7f0beffdd170 -D -b binary -m i386:x86-64 /tmp/dump.bin
+------
+34778:C 29 Apr 2020 22:28:36.360 # dump of function (hexdump of 7120 bytes):
+554889e54157415641554154534881ec48050000488b05ed6c3700648b0089855cfbffff8b87c000000085c00f85ee000000c787c0000000ffffffff8b0ff6c1080f85010300004885f60f8415030000f6c1024989d54989f44889fb0f8556010000488b02be250000004c89e7898d50fbffff4531f6488985a8fbffff488b4208488985b0fbffff488b4210488985b8fbffffe8589504008b8d50fbffff4989c748898568fbffff80e5800f847f000000488b83d80000004c89f94c89e64c29e14889df4889ca48898d50fbffffff5038488b8d50fbffff41b9ffffffff4839c10f8499010000f703008000007511488b9388000000836a04010f84d00000004585f60f85020100004489c8488d65d85b415c415d415e415f5dc30f1f44000083f8ff0f8413ffffffb8ffffffffebdc448b3589c437004585f60f8500010000488b05b96c370048899dc8fbffff488985c0fbffff488b9388000000644c8b0425100000004c3b4208743ebe0100000031c0833d57c43700007408f00fb1327507eb1b0fb1327416488d3a4881ec80000000e8797d0c004881c480000000488b93880000004c89420883420401e9fffeffff660f1f440000e8332b0000488d65d85b415c415d415e415f5dc30f1f400048c7420800000000833df1c33700007407f0ff0a7506eb1aff0a7416488d3a4881ec80000000e8457d0c004881c4800000004585f60f84fefeffff44898d5cfbffff488b056fc33700488dbdc0fbffff48c1c81164483304253000000031f6ffd0448b8d5cfbffffe9ccfeffff0f1f00488b0539c33700488dbdc0fbffff4889da48c1c811644833042530000000488b359b6b3700ffd0f703008000000f84e2feffffe939feffff0f1f8400000000004881f9ffffff7f7e17488b05786a370064c7004b000000e94bfeffff0f1f4000488b9568fbffff4189c9803a000f8434feffff48833d3dc03700000f84bc000000488d85e0fbffffc78558fbffff00000000c7853cfbffff0000000048c78550fbffffffffffff48c78548fbffff0000000048898540fbffff8b855cfbffffffb548fbffff4c8d85a8fbffffffb550fbffff8b9558fbffff4c89e94c89e64889df508b853cfbffffffb540fbffff415750e8aad8ffff4883c4304189c1e9a5fdffff660f1f440000488b05b969370083c920890f64c70009000000b8ffffffffe9a7fdffff488b059c69370064c70016000000b8ffffffffe98ffdffff48833d7bbf3700000f8536ffffff48833d3582370000488d85e0fbffffc78558fbffff00000000c7853cfbffff0000000048c78550fbffffffffffff48c78548fbffff0000000048898540fbffff0f8528ffffff488d8568fbffff488985b0faffff488d8590fbffff48898500fbffff488d8580fbffff488985c8faffff488d8578fbffff488985a8faffff488d420148898568fbffff440fbe520131c0418d52e080fa5a771f410fbec2488d15218e130083e82048980fb61402488d05918d130048630490488d3567230000c685e8faffff20c785b8faffff00000000c78528fbffffffffffffc78530fbffff000000004531c04801f0488bb540fbffffc785d0faffff00000000c78520fbffff00000000c785e0faffff00000000c78510fbffff00000000c785c0faffff000000004881c6e8030000c785f0faffff00000000c78508fbffff00000000c785f8faffff00000000c78538fbffff000000004889b518fbffffffe0488b057b673700418b55004889a520fbffff64488b00488b008b80a80000004883c00f48c1e80448c1e0044829c4488b8500fbffff83fa2f4889a518fbffff48c700000000000f871c03000089d04903451083c20841895500488b9500fbffff8b30488bbd18fbffff4c898528fbffff44898d10fbffffe8eef805004883f8ff4989c34c8b8528fbffff0f849a0200008b8530fbffff448b8d10fbffff4429d885c0898530fbffff0f9f8528fbffff83bd08fbffff000fb6b528fbffff0f85810000004084f6747c4863c8be200000004889df4889ca4c8985e8faffff48898d10fbffff44898df0faffff4c899df8faffffe803180200488b8d10fbffff4c8b85e8faffff4839c10f851c020000448b8df0faffff4181f9feffff7f0f87d3210000b8ffffff7f4c8b9df8faffff4429c8398530fbffff0f87df01000044038d30fbffff4585c90f882c020000488b83d80000004c8985f0faffff4c89da4c899d10fbffff44898df8faffff4889df488bb518fbffffff50384c8b9d10fbffff4c8b85f0faffff4939c30f859a010000448b8df8faffff41baffffff7f4489d04429c848984939c30f876e0100004501d983bd08fbffff00448995f8faffff747e80bd28fbffff00747548638d30fbffffbe200000004889df4c898510fbffff44898d18fbffff4889ca48898d28fbffffe804170200488b8d28fbffff4c8b8510fbffff4839c10f851d010000448b8d18fbffff4181f9feffff7f0f87d4200000448b95f8faffff4529ca44399530fbffff0f87e400000044038d30fbffff488ba520fbffff83853cfbffff014d85c074164c89c744898d30fbffffe8f11ffdff448b8d30fbffff488b8568fbffffbe2500000044898d28fbffff488d48014889cf48898d68fbffff48898d30fbffffe8758e0400448b8d28fbffff48898568fbffff488b8d30fbffff4585c90f88960000004829c84889ce48898d30fbffff4889c2488b83d800000044898d28fbffff4889dfff5038488b9568fbffff488b8d30fbffff4889d64829ce4839f0754e448b8d28fbffffb9ffffff7f4429c94863c94839c80f8f8d0000004101c1803a000f850cfcffffe9e5f8ffff488b05ff64370064c7004b000000488ba520fbffff4d85c074084c89c7e8141ffdff41b9ffffffffe9b8f8ffff488d0d9a5e1400488d352ff41300488d3da42d1400ba7f060000e88202feff498b4508488d500849895508e9e0fcffff488d0d6a5e1400488d35fff31300488d3d742d1400ba60060000e85202feff488b058364370064c7004b000000eb96488b8568fbffff488d500148899568fbffff440fbe500131c0418d52e080fa5a771f410fbec2488d159589130083e82048980fb61402488d058586130048630490488d35db1e0000c78520fbffff010000004801f0ffe0488b8568fbffff488d500148899568fbffff440fbe500131c0418d52e080fa5a771f410fbec2488d153e89130083e82048980fb61402488d05ae86130048630490488d35841e0000c78520fbffff01000000c78510fbffff010000004801f0ffe0488b8568fbffff488d500148899568fbffff440fbe500131c0418d52e080fa5a771f410fbec2488d15dd88130083e82048980fb61402488d054d86130048630490488d35231e0000c78520fbffff01000000c78510fbffff000000004801f0ffe0eb9d488b4328483b43300f839b0c0000488d500148895328c600254181f9ffffff7f0f8448feffff4183c101e954fdffff83bd20fbffff00418b55000f84360c000083fa2f0f871c0c000089d04903451083c20841895500488b004889c648c1ee3f4885c04889b5d0faffff0f88eb0c0000488985e0faffffc78510fbffff0a0000008b8528fbffff85c00f883d0600004883bde0faffff000f853805000085c00f853005000083bd10fbffff080f94c0228538fbffff888528fbffff488b8518fbffff0f84f7040000488d70ffc640ff30c685e8faffff20c68528fbffff004531db4889b520fbffff488b8518fbffff482b8520fbffff4929c34889c648898518fbffffb800000000490f49c383bd08fbffff004889c2488985c0faffff8985e0faffff0f85fb0100008b8530fbffff29f029d080bd28fbffff00898530fbffff742083bd10fbffff10751789c683e80283bd38fbffff0089c20f44d6899530fbffff8b85d0faffff0b85f8faffff0b85f0faffff83f801839530fbffffff80bde8faffff200f846e07000083bdd0faffff000f84fc030000488b4328483b43300f8391060000488d500148895328c6002d4181f9ffffff7f0f84b0fcffff4183c10180bd28fbffff00746283bd10fbffff10755983bd38fbffff007450488b4328483b43300f83c8060000488d500148895328c600304181f9ffffff7f0f846bfcffff488b4328483b43300f836c060000488d5001488953284488104181f9feffff7f0f8445fcffff4183c102448b9530fbffff440395e0faffff4585d27e754963cabe300000004889df4889ca4c898508fbffff48898d30fbffff44898d10fbffff44899528fbffffe8c8110200488b8d30fbffff4c8b8508fbffff4839c10f85e8fbffff448b8d10fbffff4181f9feffff7f0f879c070000448b9528fbffffb8ffffff7f4429c84139c20f87710700004501d14585c90f88d5060000488b83d80000004c898528fbffff4889df488bb520fbffff44898d30fbffff488b9518fbffffff5038488bb518fbffff4c8b8528fbffff4839c60f8570fbffff448b8d30fbffffb8ffffff7f4429c848984839c60f8f0b07000044038d18fbffffe95ffaffff83bdd0faffff000f8438020000488b4328483b43300f83b2040000488d500148895328c6002d4181f9ffffff7f0f8417fbffff83ad30fbffff014183c10180bd28fbffff00746983bd10fbffff10756083bd38fbffff007457488b4328483b43300f8320040000488d500148895328c600304181f9ffffff7f0f84cbfaffff488b4328483b43300f83c4030000488d5001488953284488104181f9feffff7f0f84a5faffff83ad30fbffff024183c102488b85c0faffff8bb530fbffff89c1038518fbffff29c683bde0faffff0089b530fbffff7e764c6395e0faffffbe300000004889df4c898508fbffff898df8faffff44898d10fbffff4c89d24c899528fbffffe80b1002004c8b9528fbffff4c8b8508fbffff4939c20f852bfaffff448b8d10fbffff4181f9feffff7f0f87df0500008b8df8faffffb8ffffff7f4429c839c80f82b60500004101c94585c94c898510fbffff44898d28fbffff0f880c050000488b83d8000000488bb520fbffff4889df488b9518fbffffff5038488bb518fbffff4c8b8510fbffff4839c60f85b5f9ffff448b8d28fbffff41baffffff7f4489d04429c848984839c60f8f4c0500008b8530fbffff44038d18fbffff44899510fbffff85c00f8e90f8ffff4863c8be200000004889df4889ca4c898518fbffff48898d28fbffff44898d20fbffffe81c0f0200488b8d28fbffff4c8b8518fbffff4839c10f853cf9ffff448b8d20fbffff4181f9feffff7f0f87f0040000448b9510fbffff4529ca443b9530fbffff0f82c604000044038d30fbffffe91af8ffff83bdf0faffff000f84fe040000488b4328483b43300f83d1040000488d500148895328c6002be9b6fdffff83bdf0faffff000f8493070000488b4328483b43300f8366070000488d500148895328c6002be9f2fbffff48898520fbffffc685e8faffff204531dbe913fbffffc685e8faffff204180fa588b9510fbffff488bb518fbffff488bbde0faffff0f94c14c898590faffff0fb6c944898d98faffff448895a0faffffe883c5ffff83bdc0faffff0048898520fbffff440fb695a0faffff448b8d98faffff4c8b8590faffff7410488b9550fbffff4885d20f859100000083bd10fbffff0a750d83bdb8faffff000f85c80000004883bde0faffff004c639d28fbffff488b8518fbffff488bb520fbffff0f958528fbffff0fb69528fbffff4829f04939c30f9ec020d00f844cfaffff83bd10fbffff080f94c2229538fbffff889528fbffff0f84e5060000488d46ffc646ff3048898520fbffffe91cfaffffc78528fbffff01000000e901ffffff488b8d48fbffff488bb518fbffff4889c74c898598faffff44898da0faffff448895c0faffffe841c7ffff4c8b8598faffff48898520fbffff448b8da0faffff440fb695c0faffffe922ffffff488bb518fbffff488bbd20fbffff4c8985a0faffff44898db8faffff448895c0faffff4889f2e834c8ffff4c8b85a0faffff48898520fbffff448b8db8faffff440fb695c0faffffe9ebfeffff410fb6f24889df4c898510fbffff44898d28fbffffe878cf020083c001448b8d28fbffff4c8b8510fbffff0f8516fcffffe9c3f6ffffbe300000004889df4c898508fbffff44898d10fbffff44889528fbffffe83acf020083c001440fb69528fbffff448b8d10fbffff4c8b8508fbffff0f85aafbffffe97df6ffff4c8985f0faffff44898df8faffffbe2d00000044889508fbffff4889dfe8f4ce020083c001440fb69508fbffff448b8df8faffff4c8b85f0faffff0f8518fbffffe937f6ffff4c8985f0faffff44898df8faffffbe2d00000044889508fbffff4889dfe8aece020083c001440fb69508fbffff448b8df8faffff4c8b85f0faffff0f8539f9ffffe9f1f5ffff410fb6f24889df4c898510fbffff44898d28fbffffe870ce020083c001448b8d28fbffff4c8b8510fbffff0f856ef9ffffe9bbf5ffffbe300000004889df4c898508fbffff44898d10fbffff44889528fbffffe832ce020083c001440fb69528fbffff448b8d10fbffff4c8b8508fbffff0f8502f9ffffe975f5ffff8b8530fbffff85c00f8eab0000004863c8be200000004889df4889ca4c8985b8faffff48898d08fbffff44898dc0faffff448895e8faffffe8010b0200488b8d08fbffff4c8b85b8faffff4839c10f8521f5ffff448b8dc0faffff440fb695e8faffff4181f9feffff7f0f87cd000000b8ffffff7f4429c8398530fbffff0f87a600000044038d30fbffffc78530fbffff00000000e9f8f7ffff488d0d8d531400488d3522e91300488d3d97221400ba5f060000e875f7fdffc78530fbffff00000000e9caf7ffff4585c94c898520fbffff44898d28fbffff0f88def4ffff488b83d80000004c89d24c899530fbffff4c89de4889dfff50384c8b9530fbffff4c8b8520fbffff4939c20f8565f4ffff448b8d28fbffffb8ffffff7f4429c848984939c20f86f5f8ffff488b053559370064c7004b000000e938f4ffff488d0dea521400488d357fe81300488d3dc4211400ba5f060000e8d2f6fdff4c8985f0faffff44898df8faffffbe2b00000044889508fbffffe997fdffff83bdf8faffff000f84e1f8ffff488b4328483b43300f832a180000488d500148895328c60020e9abf8ffff83bd08fbffff000fb6b5e8faffffb8300000000f44f0488b8568fbffff4088b5e8faffff488d500148899568fbffff440fbe500131c0418d52e080fa5a771f410fbec2488d15be7d130083e82048980fb61402488d052e7d130048630490488d35041300004801f0ffe0c78510fbffff0800000083bd20fbffff00418b5500744383fa2f0f87360c000089d04903451083c20841895500488b00c785f0faffff00000000c785f8faffff00000000c785d0faffff00000000488985e0faffffe91ef5ffff83bdd0faffff000f84a713000083fa2f0f878d13000089d04903451083c208418955000fb600c785f0faffff00000000c785f8faffff00000000c785d0faffff00000000488985e0faffffe9cef4ffff488b8568fbffff488d500148899568fbffff440fbe5001418d42e03c5a766f31c0488d352d120000c785f8faffff010000004801f0ffe0488b8568fbffff488d500148899568fbffff440fbe500131c0418d52e080fa5a771f410fbec2488d15907c130083e82048980fb61402488d05007c130048630490488d35d6110000c785f0faffff010000004801f0ffe0410fbec2488d155b7c130083e82048980fb61402488d05cb7b130048630490e96fffffff498b4508488d500849895508e9e0f3ffff83bdd0faffff00746f83fa2f775c89d04903451083c20841895500480fbe00e9bff3ffffc78510fbffff0a000000e96afeffffbe250000004889df4c898528fbffff44898d30fbffffe843ca020083c001448b8d30fbffff4c8b8528fbffff0f853ef3ffffe98ef1ffff498b4508488d500849895508eba383bde0faffff000f858700000083fa2f777489d04903451083c20841895500486300e944f3ffff4c8985f0faffff44898df8faffffbe2b00000044889508fbffffe91dfbffff83bdf8faffff000f8481f4ffff488b4328483b4330735d488d500148895328c60020e956f4ffff48f7d8c78510fbffff0a000000488985e0faffffe90df3ffff498b4508488d500849895508eb8b83fa2f774089d04903451083c20841895500480fbf00e9bcf2ffff888528fbffffe940f3ffff4c8985f0faffff44898df8faffffbe2000000044889508fbffffe98afaffff498b4508488d500849895508ebbf418b550083fa2f0f875f06000089d04903451083c20841895500488b004885c00f84fd000000488985e0faffff41ba78000000c785c0faffff00000000c78538fbffff01000000c78510fbffff10000000c785d0faffff00000000e94cf2fffff6437404740983bd58fbffff00742d83bd20fbffff00418b5500747983fa2f776689d04903451083c20841895500488b004963d1488910e912efffff4c898528fbffff44898d30fbffff31c04883c9ff4c89e7f2ae4c89e74889ce48f7d6e8af870c0085c0898558fbffff448b8d30fbffff4c8b8528fbffff7994488d3db01d1400e81b8e0200498b4508488d500849895508eb9983bdd0faffff000f841d0b000083fa2f0f87030b000089d04903451083c20841895500488b00448808e98beeffff8bb528fbffffb8050000004c8d1db3e3130089c2c78520fbffff0000000083fe040f4fd6899528fbffff83bd20fbffff000f85930200004180fa530f84890200008b8528fbffff83f8ff0f84560200004c89df4863f04c898510fbffff44898d18fbffff4c899d20fbffffe83fce03004c8b9d20fbffff448b8d18fbffff4989c24c8b8510fbffffc78528fbffff000000008b8530fbffff44899518fbffff4429d0898530fbffff0f881bfaffff0f958520fbffff83bd08fbffff000fb68520fbffff0f859600000084c00f848e00000048638d30fbffffbe200000004889df4c8985e0faffff44898de8faffff4c8995f0faffff4c899df8faffff4889ca48898d10fbffffe834040200488b8d10fbffff4c8b85e0faffff4839c10f8554eeffff448b8de8faffff4181f9feffff7f0f87040e0000b8ffffff7f4c8b9df8faffff4c8b95f0faffff4429c8398530fbffff0f87d3f9ffff44038d30fbffff4585c94c8985e8faffff44898df0faffff0f8848eeffff488b83d80000004c89d24c8995f8faffff4c89de4c899d10fbffff4889dfff50384c8b95f8faffff4c8b85e8faffff4939c20f85c8edffff448b8df0faffffb8ffffff7f4c8b9d10fbffff4429c848984939c20f875cf9ffff44038d18fbffff83bd08fbffff000f848d00000080bd20fbffff000f848000000048638d30fbffffbe200000004889df4c898508fbffff44898d10fbffff4c899d18fbffff4889ca48898d20fbffffe81c030200488b8d20fbffff4c8b8508fbffff4839c10f853cedffff448b8d10fbffff4181f9feffff7f0f87ec0c0000b8ffffff7f4c8b9d18fbffff4429c8398530fbffff0f87c2f8ffff44038d30fbffff83bd28fbffff000f840eecffff4c89df4c898528fbffff44898d30fbffffe8040cfdff448b8d30fbffff4c8b8528fbffffe9e5ebffff31c04883c9ff4c89dff2aec78528fbffff000000004889c848f7d04c8d50ffe9c8fdffff488b85c8faffff4c899d90fbffff48c700000000008b8528fbffff85c00f88b70000003d001000004863d07e3a4889d74c898518fbffff44898d20fbffff48899528fbffffe84b5d0c0085c0488b9528fbffff448b8d20fbffff4c8b8518fbffff0f842902
+Function at 0x7f0bf0026760 is strchrnul
+Function at 0x7f0bf003cfc0 is wcrtomb
+Function at 0x7f0befffef50 is _IO_padn
+Function at 0x7f0beffbdc40 is __assert_fail
+Function at 0x7f0bf000b220 is __overflow
+Function at 0x7f0bf00077f0 is __libc_fatal
+Function at 0x7f0bf001b8c0 is strnlen
+Function at 0x7f0bf00a4a70 is __libc_alloca_cutoff
+
+=== REDIS BUG REPORT END. Make sure to include from START to END. ===
+
+       Please report the crash by opening an issue on github:
+
+           http://github.com/antirez/redis/issues
+
+  Suspect RAM error? Use redis-server --test-memory to verify it.
+
+34777:C 29 Apr 2020 22:28:36.590 # Background saving terminated by signal 11
+34771:M 29 Apr 2020 22:28:41.001 * LoadCron
+34777:C 29 Apr 2020 22:28:41.189 * LoadCron
+34780:C 29 Apr 2020 22:28:41.189 * Hey Im Child
+34780:C 29 Apr 2020 22:28:41.189 # Short read or OOM loading DB. Unrecoverable error, aborting now.
+34780:C 29 Apr 2020 22:28:41.189 # Internal error in RDB reading function at rdb.c:2152 -> Unexpected EOF reading RDB file
+[offset 0] Checking RDB file dump.rdb
+--- RDB ERROR DETECTED ---
+[offset 0] Unexpected EOF reading RDB file
+[additional info] While doing: start
+[additional info] Reading type 0 (string)
+[info] 0 keys read
+[info] 0 expires
+[info] 0 already expired
+34771:M 29 Apr 2020 22:28:46.001 * LoadCron
+34777:C 29 Apr 2020 22:28:46.189 * LoadCron
+34777:signal-handler (158816692734771) :signal-handler (Received SIGINT scheduling shutdown...1588166927
+) Received SIGINT scheduling shutdown...
+34771:M 29 Apr 2020 22:28:47.348 # User requested shutdown...
+34771:M 29 Apr 2020 22:28:47.348 * Calling fsync() on the AOF file.
+34771:M 29 Apr 2020 22:28:47.349 * Saving the final RDB snapshot before exiting.
+34771:M 29 Apr 2020 22:28:47.349 * rdbSaveRio
+34771:M 29 Apr 2020 22:28:47.352 * DB saved on disk
+34771:M 29 Apr 2020 22:28:47.352 * Removing the pid file.
+34771:M 29 Apr 2020 22:28:47.352 # Redis is now ready to exit, bye bye...
+34777:C 29 Apr 2020 22:28:47.404 # User requested shutdown...
+34777:C 29 Apr 2020 22:28:47.404 * Calling fsync() on the AOF file.
+34777:C 29 Apr 2020 22:28:47.405 * Saving the final RDB snapshot before exiting.
+34777:C 29 Apr 2020 22:28:47.405 * rdbSaveRio
+34777:C 29 Apr 2020 22:28:47.407 * DB saved on disk
+34777:C 29 Apr 2020 22:28:47.407 * Removing the pid file.
+34777:C 29 Apr 2020 22:28:47.408 # Redis is now ready to exit, bye bye...
