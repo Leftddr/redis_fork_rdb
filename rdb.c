@@ -1349,7 +1349,25 @@ int rdbSaveBackground(char *filename, rdbSaveInfo *rsi) {
     openChildInfoPipe();
 
     start = ustime();
-    if (server.load_child_pid != -1 || (childpid = fork()) == 0) {
+	if(server.imchild){
+		int retval;
+		closeListeningSockets(0);
+		redisSetProcTitle("redis-rdb-bgsave");
+		retval = rdbSave(filename, rsi);
+		if (retval == C_OK){
+			size_t private_dirty = zmalloc_get_private_dirty(-1);
+			if(private_dirty){
+				serverLog(LL_NOTICE,
+					"RDB: %zu MB of memory used by copy-on-write",
+					private_dirty/(1024*1024));
+			}
+			server.child_info_data.cow_size = private_dirty;
+			sendChildInfo(CHILD_INFO_TYPE_RDB);
+		}
+		serverLog(LL_NOTICE, "RETURN THE VALUE");
+		return retval;
+	}
+    else if ((childpid = fork()) == 0) {
         int retval;
 
         /* Child */
@@ -1368,8 +1386,9 @@ int rdbSaveBackground(char *filename, rdbSaveInfo *rsi) {
             server.child_info_data.cow_size = private_dirty;
             sendChildInfo(CHILD_INFO_TYPE_RDB);
         }
-		if(server.load_child_pid == -1)
+
         	exitFromChild((retval == C_OK) ? 0 : 1);
+		
     } else {
         /* Parent */
         server.stat_fork_time = ustime()-start;
@@ -1393,7 +1412,7 @@ int rdbSaveBackground(char *filename, rdbSaveInfo *rsi) {
         updateDictResizePolicy();
         return C_OK;
     }
-	serverLog(LL_NOTICE, "I'm child");
+	//serverLog(LL_NOTICE, "I'm child");
     return C_OK; /* unreached */
 }
 
@@ -2114,6 +2133,7 @@ int rdbLoadRio(rio *rdb, rdbSaveInfo *rsi, int loading_aof) {
         } else {
             /* Add the new object in the hash table */
             dbAdd(db,key,val);
+			serverLog(LL_NOTICE, "OK");
 
             /* Set the expire time if needed */
             if (expiretime != -1) setExpire(NULL,db,key,expiretime);

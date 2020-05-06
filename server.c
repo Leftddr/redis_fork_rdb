@@ -1107,6 +1107,7 @@ void updateCachedTime(int update_daylight_info) {
 
 int LoadCron(struct aeEventLoop *eventLoop,long long id, void *clientData){
 	serverLog(LL_NOTICE, "LoadCron");
+	serverPanic("HELLO");
 	UNUSED(eventLoop);
 	UNUSED(id);
 	UNUSED(clientData); 
@@ -1146,6 +1147,9 @@ int LoadCron(struct aeEventLoop *eventLoop,long long id, void *clientData){
 			server.aof_child_pid = -1;
 			server.rdb_child_pid = -1;
 			server.load_child_pid = childpid;
+			serverLog(LL_NOTICE, "background saving started by pid %d", childpid);
+			server.rdb_save_time_start = time(NULL);
+			//server.rdb_child_type = RDB_CHILD_TYPE_DISK;
 		}
 	}		
 	return 50000/server.hz;
@@ -1308,8 +1312,8 @@ int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
                 if (!bysignal && exitcode == 0) receiveChildInfo();
             } else if(pid == server.load_child_pid){
 				serverLog(LL_NOTICE, "%d", server.load_child_pid);
-				backgroundSaveDoneHandler(exitcode,bysignal);
-				if(!bysignal && exitcode == 0) receiveChildInfo();
+				//backgroundSaveDoneHandler(exitcode,bysignal);
+				//if(!bysignal && exitcode == 0) receiveChildInfo();
 				server.load_child_pid = -1;
 				serverLog(LL_NOTICE, "Complete terminated load child");
 				/*
