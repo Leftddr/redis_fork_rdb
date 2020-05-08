@@ -75,7 +75,6 @@ robj *makeObjectShared(robj *o) {
 /* Create a string object with encoding OBJ_ENCODING_RAW, that is a plain
  * string object where o->ptr points to a proper sds string. */
 robj *createRawStringObject(const char *ptr, size_t len) {
-   //printf("%s\n", ptr);
     return createObject(OBJ_STRING, sdsnewlen(ptr,len));
 }
 

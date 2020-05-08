@@ -1299,6 +1299,8 @@ struct redisServer {
 	bool not_first_save;
 	bool imchild;
 	pid_t load_child_pid;
+	time_t save_times;
+	int save_changes;
 
     /* Mutexes used to protect atomic variables when atomic builtins are
      * not available. */

@@ -1364,7 +1364,7 @@ int rdbSaveBackground(char *filename, rdbSaveInfo *rsi) {
 			server.child_info_data.cow_size = private_dirty;
 			sendChildInfo(CHILD_INFO_TYPE_RDB);
 		}
-		serverLog(LL_NOTICE, "RETURN THE VALUE");
+		//serverLog(LL_NOTICE, "RETURN THE VALUE");
 		return retval;
 	}
     else if ((childpid = fork()) == 0) {
@@ -2133,7 +2133,7 @@ int rdbLoadRio(rio *rdb, rdbSaveInfo *rsi, int loading_aof) {
         } else {
             /* Add the new object in the hash table */
             dbAdd(db,key,val);
-			serverLog(LL_NOTICE, "OK");
+			//serverLog(LL_NOTICE, "OK");
 
             /* Set the expire time if needed */
             if (expiretime != -1) setExpire(NULL,db,key,expiretime);

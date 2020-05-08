@@ -60,6 +60,7 @@
 
 struct sharedObjectsStruct shared;
 
+
 /* Global vars that are actually used as constants. The following double
  * values are used for double on-disk serialization, and are initialized
  * at runtime to avoid strange compiler optimizations. */
@@ -1107,12 +1108,12 @@ void updateCachedTime(int update_daylight_info) {
 
 int LoadCron(struct aeEventLoop *eventLoop,long long id, void *clientData){
 	serverLog(LL_NOTICE, "LoadCron");
-	serverPanic("HELLO");
+	//serverPanic("HELLO");
 	UNUSED(eventLoop);
 	UNUSED(id);
 	UNUSED(clientData); 
 	if(server.aof_child_pid == -1 && server.rdb_child_pid == -1 && !ldbPendingChildren() && server.not_first_save && server.load_child_pid == -1){
-		server.aof_child_pid = 65534; server.rdb_child_pid = 65534;
+		server.aof_child_pid = 65535; server.rdb_child_pid = 65535;
 		fork_db = zmalloc(sizeof(redisDb)*server.dbnum);
 		for(int i = 0 ; i < server.dbnum ; i++){
 			fork_db[i].dict = dictCreate(&dbDictType,NULL);
@@ -1124,33 +1125,37 @@ int LoadCron(struct aeEventLoop *eventLoop,long long id, void *clientData){
 			fork_db[i].avg_ttl = 0;
 			fork_db[i].defrag_later = listCreate();
 		}
-		
-		int childpid = -1;
-		if((childpid = fork()) == 0){
-			serverLog(LL_NOTICE, "Hey Im Child");
-			server.imchild = true;
+	
+		serverLog(LL_NOTICE, "server.dirty = %lld", server.dirty);	
+		if(server.dirty >= server.save_changes && server.unixtime-server.lastsave > server.save_times){
+			serverLog(LL_NOTICE, "%d changes in %d seconds. Child process saving...", server.save_changes, (int)server.save_times);
+			int childpid = -1;
+			if((childpid = fork()) == 0){
+				//serverLog(LL_NOTICE, "Hey Im Child");
+				server.imchild = true;
 
-			rdbSaveInfo rsi = RDB_SAVE_INFO_INIT;
-			rdbLoad(server.rdb_filename, &rsi);
-			loadAppendOnlyFile(server.aof_filename);
+				rdbSaveInfo rsi = RDB_SAVE_INFO_INIT;
+				rdbLoad(server.rdb_filename, &rsi);
+				loadAppendOnlyFile(server.aof_filename);
 		
-			server.aof_child_pid = -1;
-			server.rdb_child_pid = -1;
-			rdbSaveInfo rsi_, *rsiptr;
-			rsiptr = rdbPopulateSaveInfo(&rsi_);
-			int retval = rdbSaveBackground(server.rdb_filename, rsiptr);
+				server.aof_child_pid = -1;
+				server.rdb_child_pid = -1;
+				rdbSaveInfo rsi_, *rsiptr;
+				rsiptr = rdbPopulateSaveInfo(&rsi_);
+				int retval = rdbSaveBackground(server.rdb_filename, rsiptr);
 
-			server.imchild = false;
-			zfree(fork_db);
-			exitFromChild((retval == C_OK) ? 0 : 1);
-		}else{
-			server.aof_child_pid = -1;
-			server.rdb_child_pid = -1;
-			server.load_child_pid = childpid;
-			serverLog(LL_NOTICE, "background saving started by pid %d", childpid);
-			server.rdb_save_time_start = time(NULL);
-			//server.rdb_child_type = RDB_CHILD_TYPE_DISK;
-		}
+				server.imchild = false;
+				zfree(fork_db);
+				exitFromChild((retval == C_OK) ? 0 : 1);
+			}else{
+				server.aof_child_pid = -1;
+				server.rdb_child_pid = -1;
+				server.load_child_pid = childpid;
+				serverLog(LL_NOTICE, "background saving started by pid %d", childpid);
+				server.rdb_save_time_start = time(NULL);
+				server.rdb_child_type = RDB_CHILD_TYPE_DISK;
+			}
+		}	
 	}		
 	return 50000/server.hz;
 }
@@ -1312,8 +1317,8 @@ int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
                 if (!bysignal && exitcode == 0) receiveChildInfo();
             } else if(pid == server.load_child_pid){
 				serverLog(LL_NOTICE, "%d", server.load_child_pid);
-				//backgroundSaveDoneHandler(exitcode,bysignal);
-				//if(!bysignal && exitcode == 0) receiveChildInfo();
+				backgroundSaveDoneHandler(exitcode,bysignal);
+				if(!bysignal && exitcode == 0) receiveChildInfo();
 				server.load_child_pid = -1;
 				serverLog(LL_NOTICE, "Complete terminated load child");
 				/*
@@ -1346,6 +1351,7 @@ int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
              * successful or if, in case of an error, at least
              * CONFIG_BGSAVE_RETRY_DELAY seconds already elapsed. */
 			//serverLog(LL_NOTICE, "%d", server.saveparamslen);
+			//serverLog(LL_NOTICE, "%d %d\n", sp->changes, sp->seconds);
             if (server.dirty >= sp->changes &&
                 server.unixtime-server.lastsave > sp->seconds &&
                 (server.unixtime-server.lastbgsave_try >
@@ -1358,6 +1364,8 @@ int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
                 rsiptr = rdbPopulateSaveInfo(&rsi);
                 rdbSaveBackground(server.rdb_filename,rsiptr);
 				tmp_cri = true;
+				server.save_times = sp->seconds;
+				server.save_changes = sp->changes;
                 break;
             }
         }
@@ -1821,6 +1829,8 @@ void initServerConfig(void) {
 	server.not_first_save = false;
 	server.imchild = false;
 	server.load_child_pid = -1;
+	server.save_changes = 0;
+	server.save_times = time(NULL);
 }
 
 extern char **environ;
