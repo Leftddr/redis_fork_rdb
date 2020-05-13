@@ -1108,12 +1108,10 @@ void updateCachedTime(int update_daylight_info) {
 
 int LoadCron(struct aeEventLoop *eventLoop,long long id, void *clientData){
 	serverLog(LL_NOTICE, "LoadCron");
-	//serverPanic("HELLO");
 	UNUSED(eventLoop);
 	UNUSED(id);
 	UNUSED(clientData); 
 	if(server.aof_child_pid == -1 && server.rdb_child_pid == -1 && !ldbPendingChildren() && server.not_first_save && server.load_child_pid == -1){
-		server.aof_child_pid = 65535; server.rdb_child_pid = 65535;
 		fork_db = zmalloc(sizeof(redisDb)*server.dbnum);
 		for(int i = 0 ; i < server.dbnum ; i++){
 			fork_db[i].dict = dictCreate(&dbDictType,NULL);

@@ -633,3 +633,63 @@ Ready to start redis-server
 35507:M 08 May 2020 17:40:41.912 * DB saved on disk
 35507:M 08 May 2020 17:40:41.912 * Removing the pid file.
 35507:M 08 May 2020 17:40:41.912 # Redis is now ready to exit, bye bye...
+rm -rf dump.rdb
+rm -rf appendonly.aof
+Ready to start redis-server
+37559:C 08 May 2020 17:44:50.826 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+37559:C 08 May 2020 17:44:50.826 # Redis version=5.0.8, bits=64, commit=bf0129e0, modified=1, pid=37559, just started
+37559:C 08 May 2020 17:44:50.826 # Configuration loaded
+37559:M 08 May 2020 17:44:50.827 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.8 (bf0129e0/1) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 37559
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+37559:M 08 May 2020 17:44:50.827 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+37559:M 08 May 2020 17:44:50.827 # Server initialized
+37559:M 08 May 2020 17:44:50.827 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+37559:M 08 May 2020 17:44:50.827 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+37559:M 08 May 2020 17:44:50.827 * Ready to accept connections
+37559:M 08 May 2020 17:44:50.829 * LoadCron
+37559:M 08 May 2020 17:44:55.829 * LoadCron
+37559:M 08 May 2020 17:44:57.053 * 50 changes in 6 seconds. Saving...
+37559:M 08 May 2020 17:44:57.053 * Background saving started by pid 37577
+37577:C 08 May 2020 17:44:57.054 * rdbSaveRio
+37577:C 08 May 2020 17:44:57.054 * Saving....
+37577:C 08 May 2020 17:44:57.056 * DB saved on disk
+37577:C 08 May 2020 17:44:57.057 * RDB: 1 MB of memory used by copy-on-write
+37559:M 08 May 2020 17:44:57.154 * Background saving terminated with success
+37559:M 08 May 2020 17:45:00.829 * LoadCron
+37559:M 08 May 2020 17:45:00.829 * server.dirty = 39377
+37559:M 08 May 2020 17:45:00.829 * 50 changes in 6 seconds. Child process saving...
+37559:M 08 May 2020 17:45:00.830 * background saving started by pid 37578
+37578:C 08 May 2020 17:45:00.830 * Complete in truncate in rdb
+37578:C 08 May 2020 17:45:01.015 * Complete in truncate
+37578:C 08 May 2020 17:45:01.015 * rdbSaveRio
+37578:C 08 May 2020 17:45:01.015 * Saving....
+37578:C 08 May 2020 17:45:01.018 * DB saved on disk
+37578:C 08 May 2020 17:45:01.018 * RDB: 2 MB of memory used by copy-on-write
+37559:M 08 May 2020 17:45:01.071 * 37578
+37559:M 08 May 2020 17:45:01.071 * Background saving terminated with success
+37559:M 08 May 2020 17:45:01.071 * Complete terminated load child
+37559:signal-handler (1588927504) Received SIGINT scheduling shutdown...
+37559:M 08 May 2020 17:45:04.686 # User requested shutdown...
+37559:M 08 May 2020 17:45:04.686 * Calling fsync() on the AOF file.
+37559:M 08 May 2020 17:45:04.686 * Saving the final RDB snapshot before exiting.
+37559:M 08 May 2020 17:45:04.686 * rdbSaveRio
+37559:M 08 May 2020 17:45:04.689 * DB saved on disk
+37559:M 08 May 2020 17:45:04.689 * Removing the pid file.
+37559:M 08 May 2020 17:45:04.689 # Redis is now ready to exit, bye bye...
